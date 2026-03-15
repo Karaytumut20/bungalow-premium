@@ -3,29 +3,125 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" // Vercel için en iyisi
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String?
-  role      String   @default("ADMIN")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String        @id @default(cuid())
+  email        String        @unique
+  password     String
+  name         String?
+  phone        String?
+  role         Role          @default(USER)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  reservations Reservation[]
+  reviews      Review[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  bungalows   Bungalow[]
+}
+
+model Amenity {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  icon      String?
+  bungalows Bungalow[]
 }
 
 model Bungalow {
-  id          String   @id @default(cuid())
-  title       String
-  location    String
-  price       Int
-  guests      Int
-  description String
-  features    String[]
-  images      String[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String        @id @default(cuid())
+  title        String
+  description  String
+  location     String
+  address      String?
+  basePrice    Int
+  weekendPrice Int?
+  cleaningFee  Int?          @default(0)
+  guests       Int
+  images       String[]
+  isActive     Boolean       @default(true)
+  categoryId   String?
+  category     Category?     @relation(fields: [categoryId], references: [id])
+  amenities    Amenity[]
+  reservations Reservation[]
+  reviews      Review[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Reservation {
+  id            String            @id @default(cuid())
+  bungalowId    String
+  bungalow      Bungalow          @relation(fields: [bungalowId], references: [id])
+  userId        String?
+  user          User?             @relation(fields: [userId], references: [id])
+  guestName     String
+  guestEmail    String
+  guestPhone    String
+  checkIn       DateTime
+  checkOut      DateTime
+  totalPrice    Int
+  status        ReservationStatus @default(PENDING)
+  paymentStatus PaymentStatus     @default(PENDING)
+  notes         String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+}
+
+enum ReservationStatus {
+  PENDING
+  APPROVED
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  rating     Int
+  comment    String
+  isApproved Boolean  @default(false)
+  bungalowId String
+  bungalow   Bungalow @relation(fields: [bungalowId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model SiteSettings {
+  id            String   @id @default(cuid())
+  siteName      String   @default("Premium Bungalov")
+  logoUrl       String?
+  contactEmail  String?
+  contactPhone  String?
+  contactAddress String?
+  heroTitle     String?
+  heroSubtitle  String?
+  instagramUrl  String?
+  facebookUrl   String?
+  twitterUrl    String?
+  termsText     String?
+  privacyText   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

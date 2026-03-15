@@ -7,7 +7,8 @@ export default async function PopularBungalows() {
   // Veritabanından en yeni 6 tesisi çekiyoruz
   const bungalows = await prisma.bungalow.findMany({
     take: 6,
-    orderBy: { createdAt: "desc" }
+    orderBy: { createdAt: "desc" },
+    include: { amenities: true }
   });
 
   return (
@@ -55,9 +56,9 @@ export default async function PopularBungalows() {
                   <h3 className="text-xl font-bold text-gray-900 mb-4 line-clamp-1">{bungalow.title}</h3>
 
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {bungalow.features.slice(0, 3).map((feature, idx) => (
-                      <span key={idx} className="bg-gray-50 text-gray-600 text-xs px-3 py-1.5 rounded-lg border border-gray-100 font-medium">
-                        {feature}
+                    {bungalow.amenities.slice(0, 3).map((amenity, idx) => (
+                      <span key={idx} className="flex items-center gap-1 bg-gray-50 text-gray-600 text-xs px-3 py-1.5 rounded-lg border border-gray-100 font-medium">
+                        {amenity.name}
                       </span>
                     ))}
                   </div>
@@ -65,7 +66,7 @@ export default async function PopularBungalows() {
                   <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
                     <div className="flex flex-col">
                       <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Gecelik</span>
-                      <span className="text-2xl font-bold text-gray-900">₺{bungalow.price}</span>
+                      <span className="text-2xl font-bold text-gray-900">₺{bungalow.basePrice}</span>
                     </div>
                     <Link href={`/bungalov/${bungalow.id}`} className="bg-gray-900 text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transition-colors flex items-center justify-center">
                       İncele

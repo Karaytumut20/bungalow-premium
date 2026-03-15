@@ -10,7 +10,8 @@ export default async function BungalowDetail({ params }: { params: Promise<{ id:
   const { id } = await params;
 
   const bungalow = await prisma.bungalow.findUnique({
-    where: { id: id }
+    where: { id: id },
+    include: { amenities: true }
   });
 
   if (!bungalow) {
@@ -75,10 +76,10 @@ export default async function BungalowDetail({ params }: { params: Promise<{ id:
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6 tracking-tight">Sunulan İmkanlar</h2>
               <div className="grid grid-cols-2 gap-4">
-                {bungalow.features.map((feature, idx) => (
+                {bungalow.amenities.map((amenity, idx) => (
                   <div key={idx} className="flex items-center gap-3 bg-gray-50 p-4 rounded-2xl border border-gray-100 text-gray-700 font-medium transition-colors hover:bg-white hover:shadow-md">
                     <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-                    {feature}
+                    {amenity.name}
                   </div>
                 ))}
               </div>
@@ -88,7 +89,7 @@ export default async function BungalowDetail({ params }: { params: Promise<{ id:
           <div className="lg:col-span-1 relative">
             <div className="sticky top-28 bg-white border border-gray-100 p-8 rounded-[2.5rem] shadow-2xl shadow-gray-200/50">
               <div className="flex items-end gap-1 mb-6">
-                <span className="text-4xl font-extrabold text-gray-900">₺{bungalow.price}</span>
+                <span className="text-4xl font-extrabold text-gray-900">₺{bungalow.basePrice}</span>
                 <span className="text-gray-500 font-medium pb-1.5">/ gece</span>
               </div>
 

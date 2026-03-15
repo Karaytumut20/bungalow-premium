@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LayoutDashboard, Tent, CalendarDays, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, Tent, CalendarDays, Settings, LogOut, Users } from "lucide-react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -17,17 +17,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <LayoutDashboard className="w-5 h-5" />
             <span className="font-medium">Dashboard</span>
           </Link>
-          <Link href="/admin/bungalows/new" className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
+          <Link href="/admin/bungalows" className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
             <Tent className="w-5 h-5" />
-            <span className="font-medium">Yeni Tesis Ekle</span>
+            <span className="font-medium">Tesisler</span>
           </Link>
-          <Link href="#" className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
+          <Link href="/admin/reservations" className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
             <CalendarDays className="w-5 h-5" />
             <span className="font-medium">Rezervasyonlar</span>
           </Link>
-          <Link href="#" className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
+          <Link href="/admin/users" className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
+            <Users className="w-5 h-5" />
+            <span className="font-medium">Kullanıcılar</span>
+          </Link>
+          <Link href="/admin/settings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
             <Settings className="w-5 h-5" />
-            <span className="font-medium">Ayarlar</span>
+            <span className="font-medium">Site Ayarları</span>
           </Link>
         </nav>
 

@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Twitter } from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -16,26 +17,26 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Hızlı Linkler</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#" className="hover:text-white transition">Hakkımızda</a></li>
-              <li><a href="#" className="hover:text-white transition">Tesislerimiz</a></li>
-              <li><a href="#" className="hover:text-white transition">Sıkça Sorulan Sorular</a></li>
-              <li><a href="#" className="hover:text-white transition">İletişim</a></li>
+              <li><Link href="/hakkimizda" className="hover:text-white transition">Hakkımızda</Link></li>
+              <li><Link href="/tesisler" className="hover:text-white transition">Tesislerimiz</Link></li>
+              <li><Link href="/sss" className="hover:text-white transition">Sıkça Sorulan Sorular</Link></li>
+              <li><Link href="/iletisim" className="hover:text-white transition">İletişim</Link></li>
             </ul>
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Bizi Takip Edin</h3>
             <div className="flex space-x-4 text-gray-400">
-              <a href="#" className="hover:text-white transition"><Instagram className="w-6 h-6" /></a>
-              <a href="#" className="hover:text-white transition"><Facebook className="w-6 h-6" /></a>
-              <a href="#" className="hover:text-white transition"><Twitter className="w-6 h-6" /></a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-white transition"><Instagram className="w-6 h-6" /></a>
+              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:text-white transition"><Facebook className="w-6 h-6" /></a>
+              <a href="https://x.com" target="_blank" rel="noreferrer" className="hover:text-white transition"><Twitter className="w-6 h-6" /></a>
             </div>
           </div>
         </div>
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
           <p>&copy; {new Date().getFullYear()} Bungalov Premium. Tüm hakları saklıdır.</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" className="hover:text-white transition">Gizlilik Politikası</a>
-            <a href="#" className="hover:text-white transition">Kullanım Şartları</a>
+            <Link href="/gizlilik" className="hover:text-white transition">Gizlilik Politikası</Link>
+            <Link href="/kullanim-sartlari" className="hover:text-white transition">Kullanım Şartları</Link>
           </div>
         </div>
       </div>

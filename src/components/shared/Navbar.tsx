@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X, User } from "lucide-react";
+import Link from "next/link";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,18 +28,18 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         {/* Logo */}
-        <div className="flex-shrink-0 cursor-pointer">
+        <Link href="/" className="flex-shrink-0 cursor-pointer inline-block">
           <h1 className={`text-2xl font-bold tracking-tighter ${isScrolled ? "text-gray-900" : "text-white"}`}>
             BUNGALOV<span className={isScrolled ? "text-blue-600" : "text-blue-400"}>.</span>
           </h1>
-        </div>
+        </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8">
-          <a href="#" className={`text-sm font-medium transition-colors hover:text-blue-500 ${isScrolled ? "text-gray-600" : "text-gray-200"}`}>Ana Sayfa</a>
-          <a href="#" className={`text-sm font-medium transition-colors hover:text-blue-500 ${isScrolled ? "text-gray-600" : "text-gray-200"}`}>Tesisler</a>
-          <a href="#" className={`text-sm font-medium transition-colors hover:text-blue-500 ${isScrolled ? "text-gray-600" : "text-gray-200"}`}>Hakkımızda</a>
-          <a href="#" className={`text-sm font-medium transition-colors hover:text-blue-500 ${isScrolled ? "text-gray-600" : "text-gray-200"}`}>İletişim</a>
+          <Link href="/" className={`text-sm font-medium transition-colors hover:text-blue-500 ${isScrolled ? "text-gray-600" : "text-gray-200"}`}>Ana Sayfa</Link>
+          <Link href="/tesisler" className={`text-sm font-medium transition-colors hover:text-blue-500 ${isScrolled ? "text-gray-600" : "text-gray-200"}`}>Tesisler</Link>
+          <Link href="/hakkimizda" className={`text-sm font-medium transition-colors hover:text-blue-500 ${isScrolled ? "text-gray-600" : "text-gray-200"}`}>Hakkımızda</Link>
+          <Link href="/iletisim" className={`text-sm font-medium transition-colors hover:text-blue-500 ${isScrolled ? "text-gray-600" : "text-gray-200"}`}>İletişim</Link>
         </div>
 
         {/* Desktop Actions */}
@@ -65,10 +66,10 @@ export default function Navbar() {
       {/* Mobile Menu (Basit versiyon) */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-xl py-4 flex flex-col px-4 space-y-4">
-          <a href="#" className="text-gray-800 font-medium">Ana Sayfa</a>
-          <a href="#" className="text-gray-800 font-medium">Tesisler</a>
-          <a href="#" className="text-gray-800 font-medium">Hakkımızda</a>
-          <a href="#" className="text-gray-800 font-medium">İletişim</a>
+          <Link href="/" className="text-gray-800 font-medium" onClick={() => setIsMobileMenuOpen(false)}>Ana Sayfa</Link>
+          <Link href="/tesisler" className="text-gray-800 font-medium" onClick={() => setIsMobileMenuOpen(false)}>Tesisler</Link>
+          <Link href="/hakkimizda" className="text-gray-800 font-medium" onClick={() => setIsMobileMenuOpen(false)}>Hakkımızda</Link>
+          <Link href="/iletisim" className="text-gray-800 font-medium" onClick={() => setIsMobileMenuOpen(false)}>İletişim</Link>
           <div className="h-px bg-gray-100 my-2"></div>
           <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium">Giriş Yap</button>
         </div>
