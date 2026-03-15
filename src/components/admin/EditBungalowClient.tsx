@@ -66,21 +66,22 @@ function SortableImage({ id, url, onRemove }: { id: string, url: string, onRemov
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 export default function EditBungalowPage({ params, bungalow }: { params: any, bungalow: any }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   
   // DnD requires unique string IDs for items, so we map urls to objects {id, url}
-  const [items, setItems] = useState<{id: string, url: string}[]>([]);
-
-  useEffect(() => {
+  const [items, setItems] = useState<{id: string, url: string}[]>(() => {
     if (bungalow?.images) {
-      setItems(bungalow.images.map((url: string, index: number) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return bungalow.images.map((url: string, index: number) => ({
         id: `img-${index}-${Date.now()}`,
         url
-      })));
+      }));
     }
-  }, [bungalow]);
+    return [];
+  });
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -93,6 +94,7 @@ export default function EditBungalowPage({ params, bungalow }: { params: any, bu
     })
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
 

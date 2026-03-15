@@ -1,5 +1,4 @@
-import Navbar from "@/components/shared/Navbar";
-import Footer from "@/components/shared/Footer";
+import Image from "next/image";
 
 export const metadata = {
   title: "Hakkımızda | Premium Bungalov",
@@ -8,10 +7,9 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="flex flex-col bg-white">
       {/* Koyu arka planlı header Navigation için placeholder */}
       <div className="bg-gray-900 h-24"></div>
-      <Navbar />
       
       <section className="py-20 md:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,11 +22,12 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="rounded-3xl overflow-hidden shadow-2xl h-[500px] relative">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img 
+              <Image 
                 src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
                 alt="Bungalows surrounded by nature" 
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
               />
             </div>
             <div className="space-y-6">
@@ -52,7 +51,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Footer />
     </main>
   );
 }

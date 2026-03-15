@@ -1,5 +1,4 @@
-import Navbar from "@/components/shared/Navbar";
-import Footer from "@/components/shared/Footer";
+
 
 export const metadata = {
   title: "Gizlilik Politikası | Premium Bungalov",
@@ -8,9 +7,8 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="flex flex-col bg-white">
       <div className="bg-gray-900 h-24"></div>
-      <Navbar />
       
       <section className="py-20 md:py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,7 +42,6 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <Footer />
     </main>
   );
 }

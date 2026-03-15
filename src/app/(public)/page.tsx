@@ -1,12 +1,11 @@
-import Navbar from "@/components/shared/Navbar";
 import Hero from "@/components/features/Hero";
 import PopularBungalows from "@/components/features/PopularBungalows";
-import Footer from "@/components/shared/Footer";
+
+export const revalidate = 60; // 60 seconds ISR
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col bg-gray-50">
-      <Navbar />
+    <main className="flex flex-col">
       <Hero />
       <PopularBungalows />
       {/* İlerleyen adımlarda buraya;
@@ -15,7 +14,6 @@ export default function Home() {
         - Bülten Aboneliği (Newsletter)
         eklenebilir.
       */}
-      <Footer />
     </main>
   );
 }

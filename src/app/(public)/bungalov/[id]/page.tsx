@@ -5,6 +5,8 @@ import { DatePickerWithRange } from "@/components/shared/DatePickerWithRange";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
+export const revalidate = 60; // 60 seconds ISR
+                      
 export default async function BungalowDetail({ params }: { params: Promise<{ id: string }> }) {
   // YENİ STANDART: params artık bir Promise, bu yüzden await etmemiz şart.
   const { id } = await params;
@@ -26,8 +28,9 @@ export default async function BungalowDetail({ params }: { params: Promise<{ id:
   const displayImages = [...bungalow.images, ...defaultImages].slice(0, 5);
 
   return (
-    <main className="min-h-screen bg-white pb-24 pt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main className="flex flex-col bg-white pb-24">
+      <div className="bg-gray-900 h-24 w-full"></div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
         <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 mb-8 transition group">
           <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           Ana Sayfaya Dön
@@ -55,11 +58,11 @@ export default async function BungalowDetail({ params }: { params: Promise<{ id:
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-2 h-[50vh] min-h-[400px] mb-12 rounded-3xl overflow-hidden shadow-sm">
           <div className="md:col-span-2 md:row-span-2 relative h-full w-full cursor-pointer group">
-            <Image src={displayImages[0]} alt={bungalow.title} fill className="object-cover group-hover:scale-105 transition duration-700" />
+            <Image src={displayImages[0]} alt={bungalow.title} fill unoptimized={displayImages[0].toLowerCase().includes('.gif')} className="object-cover group-hover:scale-105 transition duration-700" />
           </div>
           {displayImages.slice(1, 5).map((img, idx) => (
             <div key={idx} className="hidden md:block relative h-full w-full cursor-pointer group bg-gray-100">
-              <Image src={img} alt={`Görsel ${idx + 2}`} fill className="object-cover group-hover:scale-105 transition duration-700" />
+              <Image src={img} alt={`Görsel ${idx + 2}`} fill unoptimized={img.toLowerCase().includes('.gif')} className="object-cover group-hover:scale-105 transition duration-700" />
             </div>
           ))}
         </div>

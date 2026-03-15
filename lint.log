@@ -1,0 +1,55 @@
+﻿
+> bungalow-premium@0.1.0 lint
+> eslint
+
+
+C:\Users\umut\Desktop\bungalow-premium\seed-admin.js
+   1:26  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+   2:16  error    A `require()` style import is forbidden     @typescript-eslint/no-require-imports
+  14:9   warning  'admin' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\umut\Desktop\bungalow-premium\setup.js
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\umut\Desktop\bungalow-premium\src\app\(public)\kullanim-sartlari\page.tsx
+  34:89   error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  36:108  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\umut\Desktop\bungalow-premium\src\app\admin\page.tsx
+    1:35  warning  'CreditCard' is defined but never used    @typescript-eslint/no-unused-vars
+  104:46  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\umut\Desktop\bungalow-premium\src\components\admin\EditBungalowClient.tsx
+  69:44  warning  'params' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  69:74  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  69:89  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  78:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\umut\Desktop\bungalow-premium\src\components\admin\EditBungalowClient.tsx:78:7
+  76 |   useEffect(() => {
+  77 |     if (bungalow?.images) {
+> 78 |       setItems(bungalow.images.map((url: string, index: number) => ({
+     |       ^^^^^^^^ Avoid calling setState() directly within an effect
+  79 |         id: `img-${index}-${Date.now()}`,
+  80 |         url
+  81 |       })));  react-hooks/set-state-in-effect
+  96:33  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+
+C:\Users\umut\Desktop\bungalow-premium\src\components\admin\ReservationsCalendarClient.tsx
+   3:10  warning  'useState' is defined but never used      @typescript-eslint/no-unused-vars
+  41:24  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  54:36  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  79:37  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\umut\Desktop\bungalow-premium\src\components\admin\SettingsFormClient.tsx
+  6:78  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Ô£û 19 problems (15 errors, 4 warnings)
+

@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Plus, Edit, Home, CreditCard } from "lucide-react";
 import BungalowTableActions from "@/components/admin/BungalowTableActions";
+import Image from "next/image";
 
 export default async function AdminBungalowsPage() {
   const bungalows = await prisma.bungalow.findMany({
@@ -49,9 +50,8 @@ export default async function AdminBungalowsPage() {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden relative flex-shrink-0">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           {bungalow.images.length > 0 ? (
-                            <img src={bungalow.images[0]} alt={bungalow.title} className="object-cover w-full h-full" />
+                            <Image src={bungalow.images[0]} alt={bungalow.title} fill sizes="48px" className="object-cover" />
                           ) : (
                             <Home className="w-6 h-6 text-gray-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
                           )}

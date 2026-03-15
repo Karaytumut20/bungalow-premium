@@ -1,5 +1,3 @@
-import Navbar from "@/components/shared/Navbar";
-import Footer from "@/components/shared/Footer";
 import { HelpCircle } from "lucide-react";
 
 export const metadata = {
@@ -28,9 +26,8 @@ const faqs = [
 
 export default function FAQPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="flex flex-col">
       <div className="bg-gray-900 h-24"></div>
-      <Navbar />
       
       <section className="py-20 md:py-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,7 +54,6 @@ export default function FAQPage() {
         </div>
       </section>
 
-      <Footer />
     </main>
   );
 }

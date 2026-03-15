@@ -1,4 +1,4 @@
-import { TrendingUp, Users, Tent, CreditCard, CalendarX2 } from "lucide-react";
+import { TrendingUp, Users, Tent, CalendarX2 } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import DashboardCharts from "@/components/admin/DashboardCharts";
 import { ReservationStatus, PaymentStatus } from "@prisma/client";
@@ -101,7 +101,7 @@ export default async function AdminDashboard() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {recentReservations.length > 0 ? (
-                recentReservations.map((res: any) => (
+                recentReservations.map((res) => (
                   <tr key={res.id} className="hover:bg-gray-50 transition">
                     <td className="px-6 py-4 font-medium text-gray-900">{res.guestName}</td>
                     <td className="px-6 py-4">{res.bungalow.title}</td>

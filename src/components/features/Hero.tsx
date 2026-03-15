@@ -14,6 +14,7 @@ export default function Hero() {
           alt="Premium Bungalov"
           fill
           priority
+          sizes="100vw"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60" />

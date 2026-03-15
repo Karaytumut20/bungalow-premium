@@ -40,6 +40,8 @@ export default async function PopularBungalows() {
                     src={bungalow.images[0] || "https://images.unsplash.com/photo-1587061949409-02df41d5e562"}
                     alt={bungalow.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    unoptimized={(bungalow.images[0] || "").toLowerCase().includes('.gif')}
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1 shadow-sm">

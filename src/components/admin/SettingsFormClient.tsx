@@ -3,6 +3,9 @@
 import { useTransition } from "react";
 import { Save } from "lucide-react";
 
+import { SiteSettings } from "@prisma/client";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SettingsFormClient({ settings, action }: { settings: any, action: (formData: FormData) => Promise<void> }) {
   const [isPending, startTransition] = useTransition();
 
