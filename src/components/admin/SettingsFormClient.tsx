@@ -2,11 +2,9 @@
 
 import { useTransition } from "react";
 import { Save } from "lucide-react";
-
 import { SiteSettings } from "@prisma/client";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function SettingsFormClient({ settings, action }: { settings: any, action: (formData: FormData) => Promise<void> }) {
+export default function SettingsFormClient({ settings, action }: { settings: SiteSettings, action: (formData: FormData) => Promise<void> }) {
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,7 +30,7 @@ export default function SettingsFormClient({ settings, action }: { settings: any
             <input 
               type="text" 
               name="heroTitle" 
-              defaultValue={settings.heroTitle}
+              defaultValue={settings.heroTitle || ""}
               required 
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition" 
             />
@@ -41,7 +39,7 @@ export default function SettingsFormClient({ settings, action }: { settings: any
             <label className="text-sm font-medium text-gray-700">Alt Başlık (Açıklama)</label>
             <textarea 
               name="heroSubtitle" 
-              defaultValue={settings.heroSubtitle}
+              defaultValue={settings.heroSubtitle || ""}
               required 
               rows={3}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition resize-none" 
@@ -59,7 +57,7 @@ export default function SettingsFormClient({ settings, action }: { settings: any
             <input 
               type="email" 
               name="contactEmail" 
-              defaultValue={settings.contactEmail}
+              defaultValue={settings.contactEmail || ""}
               required 
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition" 
             />
@@ -69,7 +67,7 @@ export default function SettingsFormClient({ settings, action }: { settings: any
             <input 
               type="text" 
               name="contactPhone" 
-              defaultValue={settings.contactPhone}
+              defaultValue={settings.contactPhone || ""}
               required 
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition" 
             />
@@ -78,7 +76,7 @@ export default function SettingsFormClient({ settings, action }: { settings: any
             <label className="text-sm font-medium text-gray-700">Açık Adres</label>
             <textarea 
               name="contactAddress" 
-              defaultValue={settings.contactAddress}
+              defaultValue={settings.contactAddress || ""}
               required 
               rows={2}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition resize-none" 

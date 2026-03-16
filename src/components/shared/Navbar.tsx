@@ -51,10 +51,10 @@ export default function Navbar() {
           {session ? (
             <div className="flex items-center gap-3">
               <Link 
-                href={(session.user as any)?.role === "ADMIN" ? "/admin" : "/dashboard"}
+                href={(session.user as { role?: string })?.role === "ADMIN" ? "/admin" : "/dashboard"}
                 className={`text-sm font-medium transition-colors hover:text-blue-500 ${shouldBeSolid ? "text-gray-600" : "text-gray-200"}`}
               >
-                {(session.user as any)?.role === "ADMIN" ? "Yönetim Paneli" : "Profilim"}
+                {(session.user as { role?: string })?.role === "ADMIN" ? "Yönetim Paneli" : "Profilim"}
               </Link>
               <button 
                 onClick={() => signOut({ callbackUrl: '/' })}
@@ -97,11 +97,11 @@ export default function Navbar() {
               {session ? (
                 <div className="flex flex-col gap-2">
                   <Link 
-                    href={(session.user as any)?.role === "ADMIN" ? "/admin" : "/dashboard"}
+                    href={(session.user as { role?: string })?.role === "ADMIN" ? "/admin" : "/dashboard"}
                     className="text-gray-800 font-medium px-4 py-2 bg-gray-50 rounded-lg text-center block"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {(session.user as any)?.role === "ADMIN" ? "Yönetim Paneli" : "Profilim"}
+                    {(session.user as { role?: string })?.role === "ADMIN" ? "Yönetim Paneli" : "Profilim"}
                   </Link>
                   <button 
                     onClick={() => signOut({ callbackUrl: '/' })}

@@ -28,14 +28,10 @@ export default async function AmenitiesPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Sol: Ekleme Formu */}
         <div className="lg:col-span-1 border border-gray-100 bg-white rounded-2xl p-6 shadow-sm h-fit">
-            <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <div className="bg-orange-100 p-2 rounded-lg text-orange-600">
-                   <Plus className="w-5 h-5" />
-                </div>
-                Özellik Ekle
-            </h3>
-            
-            <form action={createAmenity} className="space-y-4">
+            <form action={async (formData) => {
+                "use server";
+                await createAmenity(formData);
+            }} className="space-y-4">
                 <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-700">Özellik Adı</label>
                     <input required name="name" type="text" placeholder="Örn: Özel Isıtmalı Havuz" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:orange-100 focus:border-orange-400 outline-none transition" />

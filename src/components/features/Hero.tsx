@@ -16,8 +16,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 export default function Hero() {
   const router = useRouter();
-  const [location, setLocation] = useState("");
-  const { guests, setGuests, dates } = useBookingStore();
+  const { guests, setGuests } = useBookingStore();
+  const [location, setLocation] = useState(""); // Added missing state for location
 
   const handleSearch = () => {
     const params = new URLSearchParams();

@@ -29,14 +29,10 @@ export default async function CategoriesPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Sol: Ekleme Formu */}
         <div className="lg:col-span-1 border border-gray-100 bg-white rounded-2xl p-6 shadow-sm h-fit">
-            <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <div className="bg-blue-100 p-2 rounded-lg text-blue-600">
-                   <Plus className="w-5 h-5" />
-                </div>
-                Kategori Ekle
-            </h3>
-            
-            <form action={createCategory} className="space-y-4">
+            <form action={async (formData) => {
+                "use server";
+                await createCategory(formData);
+            }} className="space-y-4">
                 <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-700">Kategori Adı</label>
                     <input required name="name" type="text" placeholder="Örn: Balayı Evleri" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition" />

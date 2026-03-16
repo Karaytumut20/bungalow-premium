@@ -159,7 +159,7 @@ async function BungalowDetailContent({ params }: { params: Promise<{ id: string 
             basePrice={bungalow.basePrice} 
             weekendPrice={bungalow.weekendPrice} 
             cleaningFee={bungalow.cleaningFee} 
-            bookedDates={bookedDates as any}
+            bookedDates={bookedDates || []}
           />
         </div>
       </div>

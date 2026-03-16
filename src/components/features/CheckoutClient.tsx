@@ -34,7 +34,7 @@ export function CheckoutClient({ bungalow }: CheckoutClientProps) {
     );
   }
 
-  const { total, nights } = calculateTotalPrice(
+  const { total } = calculateTotalPrice(
     dates.from,
     dates.to,
     bungalow.basePrice,

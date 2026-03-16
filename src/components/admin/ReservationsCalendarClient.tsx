@@ -35,12 +35,10 @@ type CalendarReservation = {
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ReservationsCalendarClient({ 
   initialReservations 
 }: { 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  initialReservations: any[] 
+  initialReservations: CalendarReservation[] 
 }) {
   // react-big-calendar için event formatına çeviriyoruz
   const events = initialReservations.map((res: CalendarReservation) => ({
@@ -53,8 +51,7 @@ export default function ReservationsCalendarClient({
   }));
 
   // Renklendirme mantığı (status'e göre)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const eventStyleGetter = (event: any) => {
+  const eventStyleGetter = (event: { status: ReservationStatus }) => {
     let backgroundColor = '#3B82F6'; // Default Blue
     
     if (event.status === ReservationStatus.APPROVED) {
@@ -79,8 +76,7 @@ export default function ReservationsCalendarClient({
     };
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSelectEvent = (event: any) => {
+  const handleSelectEvent = (event: { title: string, status: string, resource: { totalPrice: number } }) => {
     // Burada detay modali açılabilir
     alert(`${event.title}\nDurum: ${event.status}\nTutar: ₺${event.resource.totalPrice}`);
   };
