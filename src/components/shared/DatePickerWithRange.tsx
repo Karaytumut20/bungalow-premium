@@ -14,9 +14,14 @@ import {
 } from "@/components/ui/popover"
 import { useBookingStore } from "@/store/useBookingStore"
 
+interface DatePickerProps extends React.HTMLAttributes<HTMLDivElement> {
+  bookedDates?: { checkIn: Date; checkOut: Date }[];
+}
+
 export function DatePickerWithRange({
   className,
-}: React.HTMLAttributes<HTMLDivElement>) {
+  bookedDates = []
+}: DatePickerProps) {
   // Zustand store'dan tarih state'ini çekiyoruz
   const { dates, setDates } = useBookingStore()
 
@@ -57,7 +62,21 @@ export function DatePickerWithRange({
             onSelect={(range) => setDates({ from: range?.from, to: range?.to })}
             numberOfMonths={2}
             locale={tr}
-            disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))} // Geçmiş tarihleri seçilemez yap
+            disabled={(date) => {
+              // 1. Geçmiş tarihleri engelle
+              const isPast = date < new Date(new Date().setHours(0, 0, 0, 0));
+              if (isPast) return true;
+
+              // 2. Dolu (Rezerve) tarihleri engelle
+              return bookedDates.some((reservation) => {
+                const checkIn = new Date(reservation.checkIn);
+                const checkOut = new Date(reservation.checkOut);
+                checkIn.setHours(0, 0, 0, 0);
+                checkOut.setHours(0, 0, 0, 0);
+                // Bir tarih, rezervasyonun checkIn ve checkOut günleri arasındaya (veya onlara eşitse) engelle
+                return date >= checkIn && date <= checkOut;
+              });
+            }}
           />
         </PopoverContent>
       </Popover>

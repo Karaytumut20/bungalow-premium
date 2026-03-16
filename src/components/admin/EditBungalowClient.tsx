@@ -3,6 +3,7 @@
 import { Save, ImagePlus, X, ChevronLeft, GripVertical } from "lucide-react";
 import { useTransition, useState, useEffect } from "react";
 import { updateBungalow } from "@/actions/bungalow";
+import { deleteCloudinaryImage } from "@/actions/cloudinary";
 import { useRouter } from "next/navigation";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
@@ -67,9 +68,12 @@ function SortableImage({ id, url, onRemove }: { id: string, url: string, onRemov
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-export default function EditBungalowPage({ params, bungalow }: { params: any, bungalow: any }) {
+export default function EditBungalowPage({ params, bungalow, categories, amenities }: { params: any, bungalow: any, categories: any[], amenities: any[] }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [selectedAmenities, setSelectedAmenities] = useState<string[]>(() => 
+    bungalow?.amenities?.map((a: any) => a.id) || []
+  );
   
   // DnD requires unique string IDs for items, so we map urls to objects {id, url}
   const [items, setItems] = useState<{id: string, url: string}[]>(() => {
@@ -108,8 +112,30 @@ export default function EditBungalowPage({ params, bungalow }: { params: any, bu
     }
   };
 
-  const removeImage = (idToRemove: string) => {
+  const removeImage = async (idToRemove: string) => {
+    const itemToRemove = items.find(item => item.id === idToRemove);
+    if (!itemToRemove) return;
+
+    // UI'dan anında kaldır
     setItems(items.filter((item) => item.id !== idToRemove));
+
+    // Cloudinary'den background'da sil
+    try {
+      const res = await deleteCloudinaryImage(itemToRemove.url);
+      if (!res.success) {
+        console.warn("Cloudinary silme başarısız (Dosya hala sunucuda olabilir):", res.error);
+      }
+    } catch (e) {
+      console.error("Cloudinary silme işlemi sırasında beklenmeyen hata:", e);
+    }
+  };
+
+  const toggleAmenity = (id: string) => {
+    if (selectedAmenities.includes(id)) {
+      setSelectedAmenities(prev => prev.filter(a => a !== id));
+    } else {
+      setSelectedAmenities(prev => [...prev, id]);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -120,6 +146,7 @@ export default function EditBungalowPage({ params, bungalow }: { params: any, bu
     const orderedUrls = items.map(item => item.url);
     formData.append("images", JSON.stringify(orderedUrls));
     formData.append("bungalowId", bungalow.id);
+    formData.append("amenities", JSON.stringify(selectedAmenities));
 
     startTransition(async () => {
       const result = await updateBungalow(formData);
@@ -169,12 +196,49 @@ export default function EditBungalowPage({ params, bungalow }: { params: any, bu
               <label className="text-sm font-medium text-gray-700">Maksimum Misafir</label>
               <input type="number" name="guests" defaultValue={bungalow.guests} required className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition" />
             </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Kategori</label>
+              <select name="categoryId" defaultValue={bungalow.categoryId || ""} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition bg-white">
+                <option value="">Kategori Seçin</option>
+                {categories.map(c => (
+                  <option key={c.id} value={c.id}>{c.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Hafta Sonu Gecelik Fiyatı (₺)</label>
+              <input type="number" name="weekendPrice" defaultValue={bungalow.weekendPrice} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Opsiyonel" />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Temizlik Ücreti (₺)</label>
+              <input type="number" name="cleaningFee" defaultValue={bungalow.cleaningFee} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Opsiyonel" />
+            </div>
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Detaylı Açıklama</label>
             <textarea name="description" defaultValue={bungalow.description} required rows={5} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition resize-none"></textarea>
           </div>
+        </div>
+
+        {/* Özellikler (Amenities) */}
+        <div className="bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm space-y-6">
+          <h3 className="text-xl font-semibold text-gray-900 border-b pb-4">Tesis Özellikleri</h3>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {amenities.map(amenity => (
+              <label key={amenity.id} className="flex items-center gap-3 p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition">
+                <input 
+                  type="checkbox" 
+                  checked={selectedAmenities.includes(amenity.id)}
+                  onChange={() => toggleAmenity(amenity.id)}
+                  className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500" 
+                />
+                <span className="text-sm font-medium text-gray-700">{amenity.name}</span>
+              </label>
+            ))}
+          </div>
+          {amenities.length === 0 && <p className="text-sm text-gray-500">Henüz hiç özellik tanımlanmamış. Admin panelinden ekleyebilirsiniz.</p>}
         </div>
 
         <div className="bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm space-y-6">

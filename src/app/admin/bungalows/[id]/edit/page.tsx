@@ -10,9 +10,14 @@ export default async function EditBungalowServerPage({ params }: { params: Promi
     include: { amenities: true }
   });
 
+  const [categories, amenities] = await Promise.all([
+    prisma.category.findMany({ orderBy: { name: 'asc' } }),
+    prisma.amenity.findMany({ orderBy: { name: 'asc' } })
+  ]);
+
   if (!bungalow) {
     notFound();
   }
 
-  return <EditBungalowClient bungalow={bungalow} params={params} />;
+  return <EditBungalowClient bungalow={bungalow} params={params} categories={categories} amenities={amenities} />;
 }

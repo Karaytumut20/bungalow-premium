@@ -8,9 +8,7 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <main className="flex flex-col bg-white">
-      <div className="bg-gray-900 h-24"></div>
-      
-      <section className="py-20 md:py-32">
+      <section className="pt-32 pb-20 md:pb-32">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 tracking-tight">Kullanım Şartları</h1>
           

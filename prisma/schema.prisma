@@ -65,7 +65,7 @@ model Bungalow {
 model Reservation {
   id            String            @id @default(cuid())
   bungalowId    String
-  bungalow      Bungalow          @relation(fields: [bungalowId], references: [id])
+  bungalow      Bungalow          @relation(fields: [bungalowId], references: [id], onDelete: Cascade)
   userId        String?
   user          User?             @relation(fields: [userId], references: [id])
   guestName     String

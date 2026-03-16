@@ -8,30 +8,31 @@ export async function createBungalow(formData: FormData) {
     const title = formData.get("title") as string;
     const location = formData.get("location") as string;
     const basePrice = parseInt(formData.get("price") as string);
+    const weekendPrice = formData.get("weekendPrice") ? parseInt(formData.get("weekendPrice") as string) : null;
+    const cleaningFee = formData.get("cleaningFee") ? parseInt(formData.get("cleaningFee") as string) : null;
     const guests = parseInt(formData.get("guests") as string);
     const description = formData.get("description") as string;
+    const categoryId = formData.get("categoryId") as string;
+    const amenitiesRaw = formData.get("amenities") as string;
+    const amenityIds: string[] = amenitiesRaw ? JSON.parse(amenitiesRaw) : [];
 
     // Formdan gelen JSON formatındaki görsel linklerini parse ediyoruz
     const imagesRaw = formData.get("images") as string;
     const images = imagesRaw ? JSON.parse(imagesRaw) : [];
 
-    // Şimdilik standart özellikler
-    const features = ["Özel Havuz", "Jakuzi", "Şömine", "Doğa Manzarası"];
-
     await prisma.bungalow.create({
       data: {
         title,
         location,
-        basePrice, // Updated to basePrice
+        basePrice,
+        weekendPrice,
+        cleaningFee,
         guests,
         description,
+        categoryId: categoryId || null,
         images: images.length > 0 ? images : ["https://images.unsplash.com/photo-1587061949409-02df41d5e562?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"],
-        // Basic implementation for features mapping to amenities
         amenities: {
-          connectOrCreate: features.map(f => ({
-            where: { name: f },
-            create: { name: f }
-          }))
+          connect: amenityIds.map(id => ({ id }))
         }
       }
     });
@@ -52,8 +53,13 @@ export async function updateBungalow(formData: FormData) {
     const title = formData.get("title") as string;
     const location = formData.get("location") as string;
     const basePrice = parseInt(formData.get("price") as string);
+    const weekendPrice = formData.get("weekendPrice") ? parseInt(formData.get("weekendPrice") as string) : null;
+    const cleaningFee = formData.get("cleaningFee") ? parseInt(formData.get("cleaningFee") as string) : null;
     const guests = parseInt(formData.get("guests") as string);
     const description = formData.get("description") as string;
+    const categoryId = formData.get("categoryId") as string;
+    const amenitiesRaw = formData.get("amenities") as string;
+    const amenityIds: string[] = amenitiesRaw ? JSON.parse(amenitiesRaw) : [];
 
     const imagesRaw = formData.get("images") as string;
     const images = imagesRaw ? JSON.parse(imagesRaw) : [];
@@ -64,9 +70,15 @@ export async function updateBungalow(formData: FormData) {
         title,
         location,
         basePrice,
+        weekendPrice,
+        cleaningFee,
         guests,
         description,
+        categoryId: categoryId || null,
         images: images.length > 0 ? images : ["https://images.unsplash.com/photo-1587061949409-02df41d5e562?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"],
+        amenities: {
+          set: amenityIds.map(id => ({ id })) // Yeni seçilenleri set et (eskileri temizler)
+        }
       }
     });
 
